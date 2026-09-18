@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Expense &amp; Budget Visualizer</title>
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body data-theme="light">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4/dist/chart.umd.min.js"></script>
+
+    <header>
+      <h1>Expense &amp; Budget Visualizer</h1>
+      <button id="theme-toggle" aria-label="Toggle dark/light mode">🌙</button>
+    </header>
+
+    <main>
+      <!-- Balance Display -->
+      <section id="balance-section" aria-label="Total Balance">
+        <p id="balance-label">Total Balance</p>
+        <p id="balance-amount" class="balance">$0.00</p>
+      </section>
+
+      <!-- Input Form -->
+      <section id="form-section" aria-label="Add Transaction">
+        <form id="transaction-form" novalidate>
+          <div class="field-group">
+            <label for="item-name">Item Name</label>
+            <input id="item-name" type="text" maxlength="100"
+                   placeholder="e.g. Coffee" autocomplete="off" />
+            <span class="error-msg" id="error-item-name" role="alert"></span>
+          </div>
+          <div class="field-group">
+            <label for="amount">Amount ($)</label>
+            <input id="amount" type="number" min="0.01" max="999999999.99"
+                   step="0.01" placeholder="0.00" />
+            <span class="error-msg" id="error-amount" role="alert"></span>
+          </div>
+          <div class="field-group">
+            <label for="category">Category</label>
+            <select id="category">
+              <option value="">-- Select --</option>
+              <option value="Food">Food</option>
+              <option value="Transport">Transport</option>
+              <option value="Fun">Fun</option>
+            </select>
+            <span class="error-msg" id="error-category" role="alert"></span>
+          </div>
+          <button type="submit" id="add-btn">Add Transaction</button>
+        </form>
+      </section>
+
+      <!-- Controls: Sort + Spend Limit -->
+      <section id="controls-section" aria-label="Controls">
+        <div id="sort-group">
+          <label for="sort-select">Sort by</label>
+          <select id="sort-select">
+            <option value="">Newest First (default)</option>
+            <option value="amount-asc">Amount: Low → High</option>
+            <option value="amount-desc">Amount: High → Low</option>
+            <option value="category-az">Category: A → Z</option>
+          </select>
+        </div>
+        <div id="spend-limit-group">
+          <label for="spend-limit">Spend Limit ($)</label>
+          <input id="spend-limit" type="number" min="0.01"
+                 max="999999999.99" step="0.01" placeholder="No limit" />
+          <span class="error-msg" id="error-spend-limit" role="alert"></span>
+        </div>
+      </section>
+
+      <!-- Transaction List -->
+      <section id="list-section" aria-label="Transaction List">
+        <div id="error-banner" class="error-banner hidden" role="alert"></div>
+        <ul id="transaction-list" aria-live="polite"></ul>
+        <p id="empty-state" class="hidden">No transactions yet. Add one above!</p>
+      </section>
+
+      <!-- Chart -->
+      <section id="chart-section" aria-label="Spending Distribution">
+        <h2>Spending by Category</h2>
+        <div id="chart-placeholder" class="hidden">No spending data available.</div>
+        <canvas id="spending-chart" role="img"
+                aria-label="Pie chart of spending by category"></canvas>
+      </section>
+    </main>
+
+    <script src="js/app.js" defer></script>
+  </body>
+</html>
